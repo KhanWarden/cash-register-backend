@@ -8,4 +8,5 @@ if __name__ == "__main__":
         app,
         host=settings.app.host,
         port=settings.app.port,
+        reload=settings.app.reload,
     )
