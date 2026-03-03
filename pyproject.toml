@@ -14,3 +14,23 @@ dev = [
     "black>=26.1.0",
     "mypy>=1.19.1",
 ]
+
+
+[tool.mypy]
+strict = true
+
+plugins = [
+    "pydantic.mypy",
+]
+
+pretty = true
+show_error_codes = true
+
+[tool.pydantic-mypy]
+init_typed = true
+
+init_forbid_extra = true
+
+warn_untyped_fields = true
+
+warn_required_dynamic_aliases = true
