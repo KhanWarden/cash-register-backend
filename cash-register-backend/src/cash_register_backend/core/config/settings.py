@@ -16,8 +16,8 @@ ENVS_DIR = CONFIG_DIR / "envs"
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
-        env_prefix="CASH_REGISTER__",
         case_sensitive=False,
+        env_prefix="CASH_REGISTER__",
         env_nested_delimiter="__",
         env_file=ENVS_DIR / ".env"
     )
