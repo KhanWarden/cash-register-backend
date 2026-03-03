@@ -21,7 +21,7 @@ class DatabaseHelper:
             url=url,
             echo=echo,
         )
-        self.session_factory: sessionmaker = sessionmaker(
+        self.session_factory: sessionmaker[Session] = sessionmaker(
             bind=self.engine,
         )
 
