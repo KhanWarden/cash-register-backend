@@ -8,3 +8,9 @@ dependencies = []
 members = [
     "cash-register-backend",
 ]
+
+[dependency-groups]
+dev = [
+    "black>=26.1.0",
+    "mypy>=1.19.1",
+]
