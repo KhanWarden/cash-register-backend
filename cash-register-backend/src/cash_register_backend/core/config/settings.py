@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from pydantic_settings import (
     BaseSettings,
     SettingsConfigDict,
@@ -8,11 +10,16 @@ from cash_register_backend.core.config.database import DatabaseConfig
 from cash_register_backend.core.config.logging import LoggingConfig
 
 
+CONFIG_DIR = Path(__file__).resolve().parent
+ENVS_DIR = CONFIG_DIR / "envs"
+
+
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         env_prefix="CASH_REGISTER__",
         case_sensitive=False,
         env_nested_delimiter="__",
+        env_file=ENVS_DIR / ".env"
     )
     app: AppConfig = AppConfig()
     db: DatabaseConfig
