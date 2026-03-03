@@ -1,0 +1,15 @@
+[project]
+name = "cash-register-backend"
+version = "0.1.0"
+authors = [
+    { name = "KhanWarden", email = "taldybayevit@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = []
+
+[project.scripts]
+cash-register-backend = "cash_register_backend:main"
+
+[build-system]
+requires = ["uv_build>=0.10.7,<0.11.0"]
+build-backend = "uv_build"
