@@ -36,7 +36,7 @@ class UserRepository(IUserRepository):
         return self._to_entity(user)
 
     @staticmethod
-    def _to_model(user: User) -> User:
+    def _to_model(user: User) -> UserModel:
         return UserModel(
             id=user.id.value,
             username=user.username.value,
