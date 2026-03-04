@@ -8,12 +8,13 @@ from cash_register_backend.domain.user.exceptions import (
     CannotDeactivateAdminException,
     InactiveUserException,
 )
+from cash_register_backend.domain.user.value_objects import Username
 
 
 @dataclass
 class User:
     id: EntityId
-    username: str
+    username: Username
     first_name: str
     last_name: str
     role: UserRole
