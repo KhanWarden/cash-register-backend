@@ -1,6 +1,8 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from decimal import Decimal
 from uuid import UUID, uuid4
+
+from cash_register_backend.core.utils import get_default_currency
 
 
 @dataclass
@@ -19,7 +21,7 @@ class EntityId:
 @dataclass(frozen=True)
 class Money:
     amount: Decimal
-    currency: str
+    currency: str = field(default_factory=get_default_currency)
 
     def __post_init__(self) -> None:
         if self.amount < Decimal("0"):
