@@ -25,7 +25,7 @@ class DatabaseHelper:
             bind=self.engine,
         )
 
-    def session_getter(self) -> Generator[Session, None, None]:
+    def session_getter(self) -> "Generator[Session, None, None]":
         session = self.session_factory()
         try:
             yield session
