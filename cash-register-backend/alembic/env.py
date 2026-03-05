@@ -6,7 +6,7 @@ from sqlalchemy import pool
 from alembic import context
 
 from cash_register_backend.core.config import settings
-from cash_register_backend.infrastructure.database import Base
+from cash_register_backend.infrastructure.database.models import Base
 
 config = context.config
 

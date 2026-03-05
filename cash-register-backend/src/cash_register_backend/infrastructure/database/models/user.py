@@ -7,7 +7,7 @@ from sqlalchemy.orm import (
     mapped_column,
 )
 
-from cash_register_backend.infrastructure.database import Base
+from cash_register_backend.infrastructure.database.models import Base
 
 
 class User(Base):
