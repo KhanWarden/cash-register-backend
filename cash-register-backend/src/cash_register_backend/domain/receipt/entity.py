@@ -42,6 +42,7 @@ class Receipt:
             raise ProductIsInactiveForSaleException()
         if (
             not product.product_type.value == ProductType.SERVICE
+            and product.stock
             and not product.stock.is_sufficient(quantity)
         ):
             raise InsufficientStockForReceiptException()
