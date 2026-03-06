@@ -8,7 +8,6 @@ from cash_register_backend.domain.shared import EntityId
 class Category:
     id: EntityId
     name: str
-    description: str | None = None
     is_active: bool = True
     created_at: datetime = field(default=datetime.now(UTC))
 
