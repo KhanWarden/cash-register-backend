@@ -21,7 +21,7 @@ class Settings(BaseSettings):
         env_nested_delimiter="__",
         env_file=ENVS_DIR / ".env"
     )
-    app: AppConfig = AppConfig()
+    app: AppConfig
     db: DatabaseConfig
     logging: LoggingConfig = LoggingConfig()
 
