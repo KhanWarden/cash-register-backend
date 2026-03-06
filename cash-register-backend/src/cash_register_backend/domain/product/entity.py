@@ -1,8 +1,14 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from datetime import datetime, UTC
 from decimal import Decimal
 
-from cash_register_backend.domain.product import StockKeepingUnit
+from cash_register_backend.domain.product import StockKeepingUnit, Barcode
 from cash_register_backend.domain.product.enums import ProductType, MeasurementUnit
+from cash_register_backend.domain.product.exceptions import (
+    CannotAdjustStockForServiceException,
+    CannotChangePriceToZeroException,
+    InsufficientStockException,
+)
 from cash_register_backend.domain.shared import EntityId, Money
 
 
@@ -27,4 +33,29 @@ class Product:
     price: Money
     sku: StockKeepingUnit
     category_id: EntityId
+    stock: ProductStock | None = None
+    barcode: Barcode = None
     is_active: bool = True
+    created_at: datetime = field(default=datetime.now(UTC))
+
+    def __post_init__(self) -> None:
+        if self.product_type == ProductType.SERVICE and self.stock is not None:
+            raise CannotAdjustStockForServiceException()
+
+    def change_price(self, new_price: Money) -> None:
+        if new_price.amount <= Decimal("0"):
+            raise CannotChangePriceToZeroException()
+        self.price = new_price
+
+    def deduct_stock(self, quantity: Decimal) -> None:
+        if self.product_type == ProductType.SERVICE:
+            raise CannotAdjustStockForServiceException()
+        if not self.stock.is_sufficient(quantity):
+            raise InsufficientStockException()
+        self.stock = ProductStock(self.stock.quantity - quantity)
+
+    def activate(self) -> None:
+        self.is_active = True
+
+    def deactivate(self) -> None:
+        self.is_active = False
