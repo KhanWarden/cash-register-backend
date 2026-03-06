@@ -10,7 +10,7 @@ class IProductRepository(ABC):
         pass
 
     @abstractmethod
-    def get_by_name(self, name: str) -> Product | list[Product] | None:
+    def get_by_name(self, name: str) -> list[Product] | None:
         pass
 
     @abstractmethod
