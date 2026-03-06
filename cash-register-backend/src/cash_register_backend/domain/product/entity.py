@@ -34,7 +34,7 @@ class Product:
     sku: StockKeepingUnit
     category_id: EntityId
     stock: ProductStock | None = None
-    barcode: Barcode = None
+    barcode: Barcode | None = None
     is_active: bool = True
     created_at: datetime = field(default=datetime.now(UTC))
 
@@ -48,9 +48,9 @@ class Product:
         self.price = new_price
 
     def deduct_stock(self, quantity: Decimal) -> None:
-        if self.product_type == ProductType.SERVICE:
+        if self.product_type.value == ProductType.SERVICE:
             raise CannotAdjustStockForServiceException()
-        if not self.stock.is_sufficient(quantity):
+        if not self.stock or not self.stock.is_sufficient(quantity):
             raise InsufficientStockException()
         self.stock = ProductStock(self.stock.quantity - quantity)
 
