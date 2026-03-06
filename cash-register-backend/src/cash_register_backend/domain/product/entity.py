@@ -47,6 +47,11 @@ class Product:
             raise CannotChangePriceToZeroException()
         self.price = new_price
 
+    def add_stock(self, quantity: Decimal) -> None:
+        if self.product_type.value == ProductType.SERVICE:
+            raise CannotAdjustStockForServiceException()
+        self.stock = ProductStock(self.stock.quantity + quantity)
+
     def deduct_stock(self, quantity: Decimal) -> None:
         if self.product_type.value == ProductType.SERVICE:
             raise CannotAdjustStockForServiceException()
