@@ -10,7 +10,7 @@ from sqlalchemy.orm import (
 from cash_register_backend.infrastructure.database.models import Base
 
 
-class User(Base):
+class UserORM(Base):
     id: Mapped[UUID] = mapped_column(primary_key=True)
     username: Mapped[str] = mapped_column(String(100), unique=True)
     first_name: Mapped[str] = mapped_column(String(100))

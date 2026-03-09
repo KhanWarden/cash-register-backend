@@ -15,10 +15,10 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from cash_register_backend.infrastructure.database.models import Base
 
 if TYPE_CHECKING:
-    from .category import Category
+    from .category import CategoryORM
 
 
-class Product(Base):
+class ProductORM(Base):
     id: Mapped[UUID] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(String(50))
     product_type: Mapped[str] = mapped_column(String(30))
@@ -36,4 +36,4 @@ class Product(Base):
     )
     created_at: Mapped[datetime] = mapped_column(DateTime)
 
-    categories: Mapped["Category"] = relationship(back_populates="categories")
+    categories: Mapped["CategoryORM"] = relationship(back_populates="categories")

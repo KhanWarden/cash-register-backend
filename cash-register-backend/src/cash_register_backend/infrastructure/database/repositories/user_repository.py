@@ -8,7 +8,7 @@ from cash_register_backend.domain.user import (
     HashedPassword,
 )
 from cash_register_backend.domain.user.enums import UserRole
-from cash_register_backend.infrastructure.database.models import User as UserModel
+from cash_register_backend.infrastructure.database.models import UserORM
 
 
 class UserRepository(IUserRepository):
@@ -19,7 +19,7 @@ class UserRepository(IUserRepository):
         self._session = session
 
     def get_by_id(self, user_id: EntityId) -> User | None:
-        user = self._session.get(UserModel, user_id.value)
+        user: UserORM | None = self._session.get(UserORM, user_id.value)
         if user is None:
             return None
         return self._to_entity(user)
@@ -30,14 +30,14 @@ class UserRepository(IUserRepository):
         self._session.commit()
 
     def get_by_username(self, username: str) -> User | None:
-        user = self._session.get(UserModel, username)
+        user: UserORM | None = self._session.get(UserORM, username)
         if user is None:
             return None
         return self._to_entity(user)
 
     @staticmethod
-    def _to_model(user: User) -> UserModel:
-        return UserModel(
+    def _to_model(user: User) -> UserORM:
+        return UserORM(
             id=user.id.value,
             username=user.username.value,
             first_name=user.first_name,
@@ -48,7 +48,7 @@ class UserRepository(IUserRepository):
         )
 
     @staticmethod
-    def _to_entity(user_model: UserModel) -> User:
+    def _to_entity(user_model: UserORM) -> User:
         return User(
             id=EntityId(user_model.id),
             username=Username(user_model.username),

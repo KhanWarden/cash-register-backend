@@ -1,12 +1,12 @@
 __all__ = (
     # ORM Models
     "Base",
-    "User",
-    "Category",
-    "Product",
+    "UserORM",
+    "CategoryORM",
+    "ProductORM",
 )
 
 from .base import Base
-from .user import User
-from .category import Category
-from .product import Product
+from .user import UserORM
+from .category import CategoryORM
+from .product import ProductORM

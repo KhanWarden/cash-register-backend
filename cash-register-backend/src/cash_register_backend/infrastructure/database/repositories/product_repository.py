@@ -6,7 +6,7 @@ from cash_register_backend.domain.product.entity import ProductStock
 from cash_register_backend.domain.product.enums import MeasurementUnit, ProductType
 from cash_register_backend.domain.product.repository import IProductRepository
 from cash_register_backend.domain.shared import EntityId, Money
-from cash_register_backend.infrastructure.database.models import Product as ProductModel
+from cash_register_backend.infrastructure.database.models import ProductORM
 
 
 class ProductRepository(IProductRepository):
@@ -17,20 +17,20 @@ class ProductRepository(IProductRepository):
         self._session = session
 
     def get_by_id(self, product_id: EntityId) -> Product | None:
-        result = self._session.get(ProductModel, product_id.value)
+        result: ProductORM | None = self._session.get(ProductORM, product_id.value)
         if result is None:
             return None
         return self._to_entity(result)
 
     def get_by_name(self, name: str) -> list[Product] | None:
         result = self._session.execute(
-            select(ProductModel).where(ProductModel.name.is_(name))
+            select(ProductORM).where(ProductORM.name.is_(name))
         )
         return [self._to_entity(row) for row in result.scalars().all()]
 
     def get_by_sku(self, sku: StockKeepingUnit) -> Product | None:
         result = self._session.execute(
-            select(ProductModel).where(ProductModel.sku.is_(sku.value))
+            select(ProductORM).where(ProductORM.sku.is_(sku.value))
         )
         if result is None:
             return None
@@ -38,7 +38,7 @@ class ProductRepository(IProductRepository):
 
     def get_by_barcode(self, barcode: Barcode) -> Product | None:
         result = self._session.execute(
-            select(ProductModel).where(ProductModel.barcode.is_(barcode.value))
+            select(ProductORM).where(ProductORM.barcode.is_(barcode.value))
         )
         if result is None:
             return None
@@ -46,12 +46,12 @@ class ProductRepository(IProductRepository):
 
     def get_all_active(self) -> list[Product]:
         result = self._session.execute(
-            select(ProductModel).where(ProductModel.is_active.is_(True))
+            select(ProductORM).where(ProductORM.is_active.is_(True))
         )
         return [self._to_entity(row) for row in result.scalars().all()]
 
     def save(self, product: Product) -> None:
-        model = self._session.get(ProductModel, product.id.value)
+        model = self._session.get(ProductORM, product.id.value)
         if model is None:
             self._session.add(self._to_model(product))
         else:
@@ -61,13 +61,13 @@ class ProductRepository(IProductRepository):
             model.price = product.price.amount
             model.sku = product.sku.value
             model.category_id = product.category_id.value
-            model.stock = product.stock.quantity if product.stock else None
+            model.stock_quantity = product.stock.quantity if product.stock else None
             model.barcode = product.barcode.value if product.barcode else None
             model.is_active = product.is_active
         self._session.flush()
 
     @staticmethod
-    def _to_entity(model: ProductModel) -> Product:
+    def _to_entity(model: ProductORM) -> Product:
         return Product(
             id=EntityId(model.id),
             name=model.name,
@@ -83,8 +83,8 @@ class ProductRepository(IProductRepository):
         )
 
     @staticmethod
-    def _to_model(product: Product) -> ProductModel:
-        return ProductModel(
+    def _to_model(product: Product) -> ProductORM:
+        return ProductORM(
             id=product.id.value,
             name=product.name,
             product_type=product.product_type.value,
