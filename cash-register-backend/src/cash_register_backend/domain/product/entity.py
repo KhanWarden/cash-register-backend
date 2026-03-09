@@ -50,6 +50,8 @@ class Product:
     def add_stock(self, quantity: Decimal) -> None:
         if self.product_type.value == ProductType.SERVICE:
             raise CannotAdjustStockForServiceException()
+        if not self.stock:
+            raise InsufficientStockException()
         self.stock = ProductStock(self.stock.quantity + quantity)
 
     def deduct_stock(self, quantity: Decimal) -> None:
