@@ -1,10 +1,14 @@
+from typing import TYPE_CHECKING
 from decimal import Decimal
 from uuid import UUID
 
 from sqlalchemy import ForeignKey, Numeric
 from sqlalchemy.orm import mapped_column, Mapped, relationship
 
-from cash_register_backend.infrastructure.database.models import Base, ReceiptORM
+from cash_register_backend.infrastructure.database.models import Base
+
+if TYPE_CHECKING:
+    from cash_register_backend.infrastructure.database.models import ReceiptORM
 
 
 class ReceiptItemORM(Base):

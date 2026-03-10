@@ -1,3 +1,4 @@
+from typing import TYPE_CHECKING
 from datetime import datetime
 from decimal import Decimal
 from uuid import UUID
@@ -6,7 +7,9 @@ from sqlalchemy import ForeignKey, DateTime, Boolean, Numeric
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from cash_register_backend.infrastructure.database.models import Base
-from cash_register_backend.infrastructure.database.models import ReceiptORM
+
+if TYPE_CHECKING:
+    from cash_register_backend.infrastructure.database.models import ReceiptORM
 
 
 class PaymentORM(Base):
