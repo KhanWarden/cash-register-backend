@@ -14,7 +14,7 @@ class IPaymentRepository(ABC):
         pass
 
     @abstractmethod
-    def get_by_cashier_id(self, receipt_id: EntityId) -> list[Payment] | None:
+    def get_by_cashier_id(self, cashier_id: EntityId) -> list[Payment] | None:
         pass
 
     @abstractmethod
