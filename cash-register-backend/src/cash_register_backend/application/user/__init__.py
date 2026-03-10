@@ -4,6 +4,7 @@ __all__ = (
     "LoginDTO",
     "ChangeRoleDTO",
     "DeactivateUserDTO",
+    "IPasswordService",
 )
 
 from .dto import (
@@ -12,3 +13,4 @@ from .dto import (
     ChangeRoleDTO,
     DeactivateUserDTO,
 )
+from .services import IPasswordService
