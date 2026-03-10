@@ -14,5 +14,5 @@ class IReceiptRepository(ABC):
         pass
 
     @abstractmethod
-    def save(self) -> None:
+    def save(self, receipt: Receipt) -> None:
         pass
