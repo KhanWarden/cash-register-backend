@@ -1,8 +1,8 @@
 """create payment, receipt and receipt_item tables
 
-Revision ID: 02d9d5d89240
+Revision ID: 55839fb37b2d
 Revises: 42887f7f993d
-Create Date: 2026-03-11 03:12:49.201981
+Create Date: 2026-03-11 03:23:03.698167
 
 """
 
@@ -12,7 +12,7 @@ from alembic import op
 import sqlalchemy as sa
 
 # revision identifiers, used by Alembic.
-revision: str = "02d9d5d89240"
+revision: str = "55839fb37b2d"
 down_revision: Union[str, Sequence[str], None] = "42887f7f993d"
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -42,7 +42,6 @@ def upgrade() -> None:
         sa.Column("cashier_id", sa.Uuid(), nullable=False),
         sa.Column("method", sa.String(), nullable=False),
         sa.Column("amount", sa.Numeric(precision=10, scale=2), nullable=False),
-        sa.Column("is_active", sa.Boolean(), nullable=False),
         sa.Column("created_at", sa.DateTime(), nullable=False),
         sa.ForeignKeyConstraint(
             ["cashier_id"],
