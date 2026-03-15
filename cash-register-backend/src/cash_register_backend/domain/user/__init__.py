@@ -2,7 +2,6 @@ __all__ = (
     #  User
     "User",
     "HashedPassword",
-    "IPasswordService",
     "IUserRepository",
     "Username",
 )
@@ -12,5 +11,4 @@ from .value_objects import (
     HashedPassword,
     Username,
 )
-from .services import IPasswordService
 from .repository import IUserRepository
