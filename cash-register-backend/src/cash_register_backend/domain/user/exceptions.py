@@ -13,3 +13,7 @@ class CannotDeactivateAdminException(DomainException):
 class InactiveUserException(DomainException):
     def __init__(self, user_id: EntityId):
         super().__init__(f"User {user_id} is not active")
+
+
+class UserNotFoundException(DomainException):
+    pass
