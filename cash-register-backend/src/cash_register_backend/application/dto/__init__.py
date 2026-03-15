@@ -1,16 +1,14 @@
 __all__ = (
-    # User
+    # DTOs
     "CreateUserDTO",
     "LoginDTO",
     "ChangeRoleDTO",
     "DeactivateUserDTO",
-    "IPasswordService",
 )
 
-from .dto import (
+from .user import (
     CreateUserDTO,
     LoginDTO,
     ChangeRoleDTO,
     DeactivateUserDTO,
 )
-from .services import IPasswordService
