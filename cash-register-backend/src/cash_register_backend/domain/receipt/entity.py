@@ -11,6 +11,7 @@ from cash_register_backend.domain.receipt.exceptions import (
     InsufficientStockForReceiptException,
     ReceiptCannotBeRefundedException,
     EmptyReceiptCannotBeCreatedException,
+    ReceiptCannotBeCancelledException,
 )
 from cash_register_backend.domain.shared import EntityId, Money
 
@@ -75,12 +76,9 @@ class Receipt:
         self.discount = discount
 
     def cancel(self) -> None:
+        if self.status != ReceiptStatus.PAID:
+            raise ReceiptCannotBeCancelledException()
         self.status = ReceiptStatus.CANCELLED
-        self.closed_at = datetime.now(UTC)
-
-    def close(self) -> None:
-        """Если оплата успешно прошла"""
-        self.status = ReceiptStatus.PAID
         self.closed_at = datetime.now(UTC)
 
     def refund(self) -> None:

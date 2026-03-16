@@ -15,3 +15,7 @@ class InsufficientStockForReceiptException(DomainException):
 
 class EmptyReceiptCannotBeCreatedException(DomainException):
     pass
+
+
+class ReceiptCannotBeCancelledException(DomainException):
+    pass
