@@ -31,8 +31,8 @@ class ReceiptItem:
 class Receipt:
     id: EntityId
     cashier_id: EntityId
-    status: ReceiptStatus
     closed_at: datetime
+    status: ReceiptStatus = ReceiptStatus.PAID
     items: list[ReceiptItem] = field(default_factory=list)
     discount: Discount | None = None
     created_at: datetime = field(default=datetime.now(UTC))
