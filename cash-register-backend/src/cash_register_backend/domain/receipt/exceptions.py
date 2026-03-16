@@ -11,3 +11,7 @@ class ProductIsInactiveForSaleException(DomainException):
 
 class InsufficientStockForReceiptException(DomainException):
     pass
+
+
+class EmptyReceiptCannotBeCreatedException(DomainException):
+    pass

@@ -10,6 +10,7 @@ from cash_register_backend.domain.receipt.exceptions import (
     ProductIsInactiveForSaleException,
     InsufficientStockForReceiptException,
     ReceiptCannotBeRefundedException,
+    EmptyReceiptCannotBeCreatedException,
 )
 from cash_register_backend.domain.shared import EntityId, Money
 
@@ -36,6 +37,10 @@ class Receipt:
     items: list[ReceiptItem] = field(default_factory=list)
     discount: Discount | None = None
     created_at: datetime = field(default=datetime.now(UTC))
+
+    def __post_init__(self) -> None:
+        if not self.items:
+            raise EmptyReceiptCannotBeCreatedException()
 
     def add_item(self, product: Product, quantity: Decimal) -> None:
         if not product.is_active:
