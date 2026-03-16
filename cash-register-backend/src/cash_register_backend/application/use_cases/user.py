@@ -3,6 +3,7 @@ from cash_register_backend.application.dto import (
     LoginDTO,
     ChangeRoleDTO,
     DeactivateUserDTO,
+    ActivateUserDTO,
 )
 from cash_register_backend.application.services import IPasswordService
 from cash_register_backend.domain.shared import EntityId
@@ -100,5 +101,21 @@ class DeactivateUserUseCase:
         if user is None:
             raise UserNotFoundException()
         user.deactivate()
+        self._users.save(user)
+        return user
+
+
+class ActivateUserUseCase:
+    def __init__(
+        self,
+        user_repository: IUserRepository,
+    ) -> None:
+        self._users = user_repository
+
+    def execute(self, dto: ActivateUserDTO) -> User:
+        user = self._users.get_by_id(EntityId(dto.user_id))
+        if user is None:
+            raise UserNotFoundException()
+        user.activate()
         self._users.save(user)
         return user
