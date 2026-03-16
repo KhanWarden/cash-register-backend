@@ -5,6 +5,7 @@ from cash_register_backend.application.dto import (
     UpdateProductDTO,
     DeactivateProductDTO,
     AddStockDTO,
+    DeductStockDTO,
 )
 from cash_register_backend.domain.category import ICategoryRepository
 from cash_register_backend.domain.category.exceptions import CategoryNotFoundException
@@ -109,6 +110,23 @@ class AddStockUseCase:
         return product
 
 
+class DeductStockUseCase:
+    def __init__(
+        self,
+        product_repository: IProductRepository,
+    ) -> None:
+        self._products = product_repository
+
+    def execute(self, dto: DeductStockDTO) -> Product:
+        product = self._products.get_by_id(EntityId(dto.product_id))
+        if product is None:
+            raise ProductNotFoundException()
+
+        product.deduct_stock(dto.quantity)
+        self._products.save(product)
+        return product
+
+
 class DeactivateProductUseCase:
     def __init__(
         self,
@@ -122,3 +140,18 @@ class DeactivateProductUseCase:
             raise ProductNotFoundException()
 
         product.deactivate()
+
+
+class ActivateProductUseCase:
+    def __init__(
+        self,
+        product_repository: IProductRepository,
+    ) -> None:
+        self._products = product_repository
+
+    def execute(self, dto: DeactivateProductDTO) -> None:
+        product = self._products.get_by_id(EntityId(dto.product_id))
+        if product is None:
+            raise ProductNotFoundException()
+
+        product.activate()
