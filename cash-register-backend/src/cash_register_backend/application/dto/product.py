@@ -48,7 +48,7 @@ class UpdateProductDTO(BaseModel):
         return validate_positive_price(value)
 
 
-class AddStockDTO(BaseModel):
+class ChangeStockDTO(BaseModel):
     product_id: UUID
     quantity: Decimal
 
@@ -60,5 +60,17 @@ class AddStockDTO(BaseModel):
         return value
 
 
+class AddStockDTO(ChangeStockDTO):
+    pass
+
+
+class DeductStockDTO(ChangeStockDTO):
+    pass
+
+
 class DeactivateProductDTO(BaseModel):
+    product_id: UUID
+
+
+class ActivateProductDTO(BaseModel):
     product_id: UUID

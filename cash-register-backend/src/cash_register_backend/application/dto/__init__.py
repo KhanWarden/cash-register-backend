@@ -14,6 +14,8 @@ __all__ = (
     "CreateProductDTO",
     "UpdateProductDTO",
     "AddStockDTO",
+    "DeductStockDTO",
+    "ActivateProductDTO",
     "DeactivateProductDTO",
 )
 
@@ -34,5 +36,7 @@ from .product import (
     CreateProductDTO,
     UpdateProductDTO,
     AddStockDTO,
+    DeductStockDTO,
+    ActivateProductDTO,
     DeactivateProductDTO,
 )
