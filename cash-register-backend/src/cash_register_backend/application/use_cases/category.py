@@ -64,3 +64,19 @@ class DeactivateCategoryUseCase:
 
         category.deactivate()
         self._categories.save(category)
+
+
+class ActivateCategoryUseCase:
+    def __init__(
+        self,
+        category_repository: ICategoryRepository,
+    ) -> None:
+        self._categories = category_repository
+
+    def execute(self, dto: DeactivateCategoryDTO) -> None:
+        category = self._categories.get_by_id(EntityId(dto.id))
+        if category is None:
+            raise CategoryNotFoundException()
+
+        category.activate()
+        self._categories.save(category)
