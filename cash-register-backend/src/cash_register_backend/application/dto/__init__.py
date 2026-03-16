@@ -3,6 +3,7 @@ __all__ = (
     "CreateUserDTO",
     "LoginDTO",
     "ChangeRoleDTO",
+    "ActivateUserDTO",
     "DeactivateUserDTO",
     # Category
     "CreateCategoryDTO",
@@ -19,6 +20,7 @@ from .user import (
     CreateUserDTO,
     LoginDTO,
     ChangeRoleDTO,
+    ActivateUserDTO,
     DeactivateUserDTO,
 )
 from .category import CreateCategoryDTO, UpdateCategoryDTO, DeactivateCategoryDTO

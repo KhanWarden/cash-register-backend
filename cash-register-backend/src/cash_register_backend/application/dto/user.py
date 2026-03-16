@@ -37,6 +37,11 @@ class ChangeRoleDTO(BaseModel):
     new_role: UserRole
 
 
+class ActivateUserDTO(BaseModel):
+    user_id: UUID
+    changed_by_id: UUID
+
+
 class DeactivateUserDTO(BaseModel):
     user_id: UUID
     changed_by_id: UUID
