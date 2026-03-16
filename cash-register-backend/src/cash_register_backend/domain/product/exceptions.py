@@ -19,3 +19,7 @@ class CannotAdjustStockForServiceException(DomainException):
 
 class InsufficientStockException(DomainException):
     pass
+
+
+class DuplicateSkuException(DomainException):
+    pass
