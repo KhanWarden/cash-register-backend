@@ -1,3 +1,6 @@
+from typing import Callable
+from uuid import UUID
+
 from cash_register_backend.application.dto import (
     CreateUserDTO,
     LoginDTO,
@@ -70,52 +73,49 @@ class LoginUseCase:
         return True
 
 
-class ChangeRoleUseCase:
+class _UserActionUseCase:
     def __init__(
         self,
         user_repository: IUserRepository,
     ) -> None:
         self._users = user_repository
 
+    def _execute(
+        self,
+        user_id: UUID,
+        action: Callable[[User], None],
+    ) -> User:
+        user = self._users.get_by_id(EntityId(user_id))
+        if user is None:
+            raise UserNotFoundException()
+
+        action(user)
+        self._users.save(user)
+        return user
+
+
+class ChangeRoleUseCase(_UserActionUseCase):
     def execute(
         self,
         dto: ChangeRoleDTO,
     ) -> User:
-        user = self._users.get_by_id(EntityId(dto.user_id))
-        if user is None:
-            raise UserNotFoundException()
-        user.change_role(dto.new_role)
-        self._users.save(user)
-        return user
+        return self._execute(
+            dto.user_id,
+            lambda user: user.change_role(dto.new_role),
+        )
 
 
-class DeactivateUserUseCase:
-    def __init__(
-        self,
-        user_repository: IUserRepository,
-    ) -> None:
-        self._users = user_repository
-
+class DeactivateUserUseCase(_UserActionUseCase):
     def execute(self, dto: DeactivateUserDTO) -> User:
-        user = self._users.get_by_id(EntityId(dto.user_id))
-        if user is None:
-            raise UserNotFoundException()
-        user.deactivate()
-        self._users.save(user)
-        return user
+        return self._execute(
+            dto.user_id,
+            lambda user: user.deactivate(),
+        )
 
 
-class ActivateUserUseCase:
-    def __init__(
-        self,
-        user_repository: IUserRepository,
-    ) -> None:
-        self._users = user_repository
-
+class ActivateUserUseCase(_UserActionUseCase):
     def execute(self, dto: ActivateUserDTO) -> User:
-        user = self._users.get_by_id(EntityId(dto.user_id))
-        if user is None:
-            raise UserNotFoundException()
-        user.activate()
-        self._users.save(user)
-        return user
+        return self._execute(
+            dto.user_id,
+            lambda user: user.activate(),
+        )
