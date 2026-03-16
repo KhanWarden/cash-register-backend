@@ -19,5 +19,9 @@ class UpdateCategoryDTO(BaseModel):
         return value.strip()
 
 
+class ActivateCategoryDTO(BaseModel):
+    id: UUID
+
+
 class DeactivateCategoryDTO(BaseModel):
     id: UUID

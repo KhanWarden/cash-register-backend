@@ -8,6 +8,7 @@ __all__ = (
     # Category
     "CreateCategoryDTO",
     "UpdateCategoryDTO",
+    "ActivateCategoryDTO",
     "DeactivateCategoryDTO",
     # Product
     "CreateProductDTO",
@@ -23,7 +24,12 @@ from .user import (
     ActivateUserDTO,
     DeactivateUserDTO,
 )
-from .category import CreateCategoryDTO, UpdateCategoryDTO, DeactivateCategoryDTO
+from .category import (
+    CreateCategoryDTO,
+    UpdateCategoryDTO,
+    ActivateCategoryDTO,
+    DeactivateCategoryDTO,
+)
 from .product import (
     CreateProductDTO,
     UpdateProductDTO,
