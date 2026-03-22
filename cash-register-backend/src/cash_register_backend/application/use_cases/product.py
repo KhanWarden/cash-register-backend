@@ -81,7 +81,7 @@ class UpdateProductUseCase:
             product.price = Money(dto.price)
 
         if dto.barcode is not None:
-            product.barcode = dto.barcode
+            product.barcode = Barcode(dto.barcode)
 
         if dto.category_id is not None:
             category = self._categories.get_by_id(EntityId(dto.category_id))
