@@ -34,7 +34,7 @@ class ProductRepository(IProductRepository):
         )
         if result is None:
             return None
-        return self._to_entity(result)
+        return self._to_entity(result.scalar_one())
 
     def get_by_barcode(self, barcode: Barcode) -> Product | None:
         result = self._session.execute(
@@ -42,7 +42,7 @@ class ProductRepository(IProductRepository):
         )
         if result is None:
             return None
-        return self._to_entity(result)
+        return self._to_entity(result.scalar_one())
 
     def get_all_active(self) -> list[Product]:
         result = self._session.execute(
