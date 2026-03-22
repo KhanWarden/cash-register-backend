@@ -1,6 +1,6 @@
 from passlib.context import CryptContext
 
-from cash_register_backend.domain.user import IPasswordService
+from cash_register_backend.application.services import IPasswordService
 
 
 class BcryptPasswordService(IPasswordService):
